@@ -1,0 +1,72 @@
+//น้มุ 5430
+#include<iostream>
+#include<string>
+#include<deque>
+using namespace std;
+
+int main() {
+	int t;
+	cin >> t;
+	for (int ti = 0; ti < t; ti++) {
+		deque<int> que;
+		string command;
+		cin >> command;
+		int n;
+		cin >> n;
+		char temp;
+		for (int i = 0; i < n; i++) {
+			cin >> temp;
+			int temp1;
+			cin >> temp1;
+			que.push_back(temp1);
+		}
+		if (n == 0) {
+			cin >> temp;
+		}
+		cin >> temp;
+		bool error = false;
+		bool reversed = false;
+		int length = command.length();
+		for (int i = 0; i < length; i++) {
+			if (command[i] == 'R') {
+				reversed = !reversed;
+			}
+			else if (command[i] == 'D') {
+				if (que.empty()) {
+					error = true;
+					break;
+				}
+				else {
+					if (reversed) {
+						que.pop_back();			
+					}
+					else {
+						que.pop_front();	
+					}
+					n--;
+				}
+			}
+		}
+		if (error) {
+			cout << "error" << endl;
+		}
+		else {
+			cout << '[';
+			if (reversed) {
+				for (int i = 0; i < n; i++) {
+					cout << que.back();
+					if (i != n - 1) cout << ',';
+					que.pop_back();
+				}
+			}
+			else {
+				for (int i = 0; i < n; i++) {
+					cout << que.front();
+					if (i != n - 1) cout << ',';
+					que.pop_front();
+				}
+			}
+			cout << ']' << endl;
+		}
+	}
+}
