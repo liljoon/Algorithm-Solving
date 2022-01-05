@@ -2,3 +2,4 @@
 Debug/
 venv/
 .idea/
+.DS_Store
