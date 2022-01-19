@@ -19,23 +19,23 @@ int main(){
     }
     sort(boxes.begin(),boxes.end());
 
-    if(boxes[m-1]>ships[n-1]){
+    if(boxes[m-1]>ships[n-1]){ // 박스의 최대값이 배의 최대값을 넘어설 경우
         cout<<-1<<endl;
         return 0;
     }
 
     vector<int> ships_boxes(n,0);
     int j = 0;
-    for(int i=0;i<m;i++){
+    for(int i=0;i<m;i++){ // ship_boxes는 각 배가 낮은 순서로 최대로 가져갔을 경우 들 수 있는 박스 수
         if(boxes[i] <= ships[j]){
-            ships_boxes[j]++;
+            ships_boxes[j]++;  // 들 수 있을 경우 카운트
         }
-        else{
+        else{ //들 수 없을 경우 다음 배로 확인하는데 방금 박스도 다시 확인해야 하므로 i--까지
             j++;
             i--;
         }
     }
-    while (1)
+    while (1) // 가장 오래 걸리는 배를 오른쪽으로 박스 하나씩 계속 미뤄주면서 만약 더이상 미룰 수 없는 경우 break
     {
         int max_index = 0;
         for(int i=0;i<n;i++){
