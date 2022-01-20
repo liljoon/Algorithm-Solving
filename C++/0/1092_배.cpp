@@ -51,5 +51,5 @@ int main(){
             ships_boxes[max_index+1]++;
         }
     }
-   cout<<*max_element(ships_boxes.begin(),ships_boxes.end())<<endl;
+   cout<<*max_element(ships_boxes.begin(),ships_boxes.end())<<endl;// 최대로 들고 있는 경우가 걸리는 시간
 }
