@@ -1,43 +1,46 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 string a, b;
-vector<vector<string>> cache;
-
-string solve1(int idx1, int idx2)
-{
-    if (idx1 >= a.length() || idx2 >= b.length())
-    {
-        return "";
-    }
-    if (cache[idx1][idx2] != "-1")
-    {
-        return cache[idx1][idx2];
-    }
-    if (a[idx1] == b[idx2])
-    {
-        string temp1 = b[idx1] + solve1(idx1 + 1, idx2 + 1);
-        string temp2 = b[idx2] + solve1(idx1 + 1, idx2 + 1);
-        cache[idx1][idx2] = (temp1.length() > temp2.length()) ? temp1 : temp2;
-        return cache[idx1][idx2];
-    }
-    else
-    {
-        string temp1 = solve1(idx1 + 1, idx2);
-        string temp2 = solve1(idx1, idx2 + 1);
-        cache[idx1][idx2] = (temp1.length() > temp2.length()) ? temp1 : temp2;
-        return cache[idx1][idx2];
-    }
-}
+int dp[2000][2000];
 
 int main()
 {
     cin >> a;
     cin >> b;
-    cache = vector<vector<string>>(a.length(), vector<string>(b.length(), "-1"));
-    string ans = solve1(0, 0);
-    cout << ans.length() << endl;
-    cout << ans << endl;
+    for (int i = 0; i <= a.length(); i++)
+    {
+        for (int j = 0; j <= b.length(); j++)
+        {
+            if (a[i] == b[j])
+            {
+                dp[i + 1][j + 1] = max(dp[i + 1][j + 1], dp[i][j] + 1);
+            }
+            dp[i][j + 1] = max(dp[i][j + 1], dp[i][j]);
+            dp[i + 1][j] = max(dp[i + 1][j], dp[i][j]);
+        }
+    }
+    int x = b.length();
+    int y = a.length();
+    string s;
+    while (dp[y][x] != 0)
+    {
+        if (dp[y - 1][x] == dp[y][x])
+            y--;
+        else if (dp[y][x - 1] == dp[y][x])
+            x--;
+        else
+        {
+            s.push_back(a[y - 1]);
+            x--;
+            y--;
+        }
+    }
+    cout << dp[a.length()][b.length()] << endl;
+    for (int i = s.length() - 1; i >= 0; i--)
+    {
+        cout << s[i];
+    }
 }
