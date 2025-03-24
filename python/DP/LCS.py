@@ -1,25 +1,25 @@
 import sys
 
-sys.setrecursionlimit(1000000)
-s1 = input()
-s2 = input()
-cache = [[-1 for i in range(len(s2))] for j in range(len(s1))]
+sys.setrecursionlimit(10 ** 6)
 
+str1 = input()
+str2 = input()
 
-def solve(start1, start2):
-    global s1, s2, cache
-    if start1 >= len(s1) or start2 >= len(s2):
+cache = [[-1 for i in range(1000)] for j in range(1000)]
+
+def solve(idx1, idx2):
+    if idx1 >= len(str1) or idx2 >= len(str2):
         return 0
-    if cache[start1][start2] != -1:
-        return cache[start1][start2]
-    a = b = c = 0
-    if s1[start1] == s2[start2]:
-        a = 1 + solve(start1 + 1, start2 + 1)
-    else:
-        b = solve(start1 + 1, start2)
-        c = solve(start1, start2 + 1)
-    cache[start1][start2] = max(a, b, c)
-    return cache[start1][start2]
 
+    if cache[idx1][idx2] != -1:
+        return cache[idx1][idx2]
+    if str1[idx1] == str2[idx2]:
+        cache[idx1][idx2] = solve(idx1 + 1, idx2 + 1) + 1
+        return cache[idx1][idx2]
 
-print(solve(0, 0))
+    a = solve(idx1 + 1, idx2)
+    b = solve(idx1, idx2 + 1)
+    cache[idx1][idx2] = max(a, b)
+    return cache[idx1][idx2]
+
+print(solve(0,0))
